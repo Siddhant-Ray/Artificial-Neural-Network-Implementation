@@ -1,7 +1,7 @@
 
 # coding: utf-8
 
-# In[118]:
+# In[25]:
 
 import numpy as np
 from sklearn import datasets, linear_model
@@ -17,11 +17,11 @@ class Config:
     reg_lambda = 0.01  # regularization strength
 
 
-# In[119]:
+# In[43]:
 
 def generate_data():
     np.random.seed(0)
-    X, y = datasets.make_moons(200, noise=0.20)
+    X, y = datasets.make_moons(200, noise=0.2)
     return X, y
 
 
@@ -35,13 +35,13 @@ def visualize_regression(X, y, clf):
     plot_decision_boundary(lambda x:clf.predict(x), X, y)
     
     
-def visualize_neural(X, y, model):
-    plt.title("Neural Network made on tanh activation ")
+def visualize_neural(X, y, model,i):
+    plt.title("Neural Network made on tanh activation with %s layers"%str(i))
     plot_decision_boundary(lambda x:predict(model,x), X, y)
     
 
 
-# In[120]:
+# In[44]:
 
 def plot_decision_boundary(pred_func, X, y):
     # Set min and max values and give it some padding
@@ -60,7 +60,7 @@ def plot_decision_boundary(pred_func, X, y):
     plt.show()
 
 
-# In[121]:
+# In[45]:
 
 # Helper function to evaluate the total loss on the dataset
 def calculate_loss(model, X, y):
@@ -82,7 +82,7 @@ def calculate_loss(model, X, y):
     return 1. / num_examples * data_loss
 
 
-# In[122]:
+# In[46]:
 
 def predict(model, x):
     W1, b1, W2, b2 = model['W1'], model['b1'], model['W2'], model['b2']
@@ -95,7 +95,7 @@ def predict(model, x):
     return np.argmax(probs, axis=1)
 
 
-# In[123]:
+# In[47]:
 
 # This function learns parameters for the neural network and returns the model.
 # nn_hdim: Number of nodes in the hidden layer
@@ -153,7 +153,7 @@ def build_model(X, y, nn_hdim, num_passes=20000, print_loss=False):
     return model
 
 
-# In[124]:
+# In[48]:
 
 def classify(X, y):
 
@@ -164,7 +164,7 @@ def classify(X, y):
     #pass
 
 
-# In[125]:
+# In[49]:
 
 def main():
     X, y = generate_data()
@@ -178,7 +178,7 @@ def main():
         
         model = build_model(X, y, i, print_loss=True) #The number of layers can be increased to improve classification    
    
-        visualize_neural(X, y, model)
+        visualize_neural(X, y, model,i)
 
 
 if __name__ == "__main__":
